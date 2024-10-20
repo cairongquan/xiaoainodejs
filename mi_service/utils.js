@@ -22,9 +22,9 @@ function generateHmac(uri, snonce, nonce, data) {
   // 使用 HMAC-SHA256 生成签名
   const hmac = crypto.createHmac("sha256", decodedSnonce);
   hmac.update(msg);
-  // 获取 HMAC 签名结果
+  // 获取 HMAC 签名结果并转换为 Base64
   const sign = hmac.digest();
-  return sign;
+  return sign.toString('base64'); // 返回 Base64 编码的字符串
 }
 function createNonce() {
   // 生成 8 个随机字节
@@ -49,7 +49,7 @@ module.exports = {
     return {
       _nonce: nonce,
       data: data,
-      signature: new Buffer(sign).toString("base64"),
+      signature: sign
     };
   },
 };

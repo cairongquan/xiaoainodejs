@@ -12,12 +12,21 @@ miRequest
     miRequest
       .getAuthToken()
       .then(() => {
-        miRequest.getDeviceList();
+        miRequest
+          .securityTokenService()
+          .then(() => {
+            miRequest.getDeviceList();
+          })
+          .catch((err) => {
+            console.log(err);
+            console.log("serviceToken失败");
+          });
       })
       .catch(() => {
         console.log("login失败");
       });
   })
-  .catch(() => {
+  .catch((err) => {
+    console.log(err);
     console.log("sign获取失败");
   });
